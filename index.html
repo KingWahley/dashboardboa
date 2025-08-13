@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en" class="transition-colors duration-300">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="bank_of_america-logo.png">
+  <title>Benjamin Johnson Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class'
+    }
+  </script>
+</head>
+ <style>
+    /* Fullscreen splash */
+    #splash {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      z-index: 9999;
+    }
+    #bottom-nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #fff;
+  border-top: 1px solid #ccc;
+  padding: 10px 0;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+/* Optional: show only on mobile */
+@media(min-width: 768px) {
+  #bottom-nav {
+    display: none;
+  }
+}
+  </style>
+  
+<body class="bg-gray-100 dark:bg-gray-900 dark:text-white min-h-screen">
+  <!-- HTML -->
+<nav id="bottom-nav" class="bottom-nav text-sm flex justify-around bg-gray-100 fixed bottom-0 w-full p-2 z-50">
+  <a class="flex flex-col items-center justify-center p-2" href="#" onclick="setActive(this); closeModal()"> <img class="w-8" src="case-svgrepo-com.svg" alt="">Dashboard</a>
+  <a class="flex flex-col items-center justify-center p-2" href="#" onclick="setActive(this); openModal('Transactions', transactionsContent)"><img class="w-8" src="chart-upward-svgrepo-com.svg" alt="">Transactions</a>
+  <a class="flex flex-col items-center justify-center p-2" href="#" onclick="setActive(this); openModal('Transfer', transferContent)"> <img class="w-8" src="transfer-svgrepo-com.svg" alt="">Transfer</a>
+  <a class="flex flex-col items-center justify-center p-2" href="#" onclick="setActive(this); openModal('Accounts and Cards', accountsContent)"> <img class="w-8" src="money-svgrepo-com.svg" alt="">Accounts</a>
+</nav>
+
+  <div id="splash" class="flex items-center justify-center p-5 ">
+    <img class="w-48 " src="bank_of_america-logo.png" alt="">
+    <p class="font-bold text-3xl">BANK OF AMERICA</p>
+    <p class="mt-6 font-semibold text-blue-800 text-l">Welcome Back  Benjamin</p>
+    <div class="w-6 h-6 mt-8 border-4 border-black-800 border-t-transparent rounded-full animate-spin"></div>
+  </div>
+  <script>
+    function setActive(el) {
+  // Remove 'active' class from all nav links
+  const links = document.querySelectorAll('#bottom-nav a');
+  links.forEach(link => link.classList.remove('bg-blue-500', 'text-white', 'rounded-lg'));
+
+  // Add 'active' class to clicked link
+  el.classList.add('bg-blue-500', 'text-white', 'rounded-lg');
+}
+    // Show splash for 3 seconds, then hide
+    setTimeout(() => {
+      document.getElementById('splash').style.display = 'none';
+      document.getElementById('main').style.display = 'block';
+    }, 1000); // 3000ms = 3 seconds
+  </script>
+  <div class="flex flex-col md:flex-row">
+    <!-- Mobile Header -->
+    <header class="md:hidden bg-white dark:bg-gray-800 shadow p-4 flex justify-between items-center">
+      <div>
+        <!-- <h2 class="text-xl font-bold">BANK OF AMERICA</h2> -->
+        <img class="w-64" src="unnamed.jpg" alt="">
+      </div>
+      
+      <div class="flex items-center gap-4">
+        <button onclick="toggleDarkMode()" class="text-gray-600 dark:text-gray-300">🌓</button>
+        <button onclick="toggleMobileMenu()" class="text-gray-600 dark:text-gray-300 focus:outline-none">☰</button>
+      </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="bg-white dark:bg-gray-800 shadow-md min-h-screen p-6 hidden md:block w-full md:w-64 md:block">
+      <div>
+        <!-- <h2 class="text-xl font-bold">BANK OF AMERICA</h2> -->
+        <img class="hidden md:block w-48 py-6" src="unnamed.jpg" alt="">
+      </div>
+      <!-- <h2 class="text-2xl font-bold mb-10 hidden md:block">Plutus</h2> -->
+      <nav class="space-y-4 text-gray-700 dark:text-gray-300">
+        <!-- <a href="#" onclick="openModal('Dashboard', 'Welcome to your dashboard.')" class="block hover:text-blue-600">Dashboard</a> -->
+        <p class="block md:hidden font-bold text-[#0033A0]">Welcome Benjamin Johnson</p>
+        <a href="#" onclick="openModal('Transfer', transferContent)" class="block hover:text-blue-600">Transfer</a>
+        <a href="#" onclick="openModal('Transactions', transactionsContent)" class="block hover:text-blue-600">Recent Transactions</a>
+        <a href="#" onclick="openModal('Accounts and Cards', accountsContent)" class="block hover:text-blue-600">Accounts and Cards</a>
+        <a href="#" onclick="openModal('Investments', investmentsContent)" class="block hover:text-blue-600">Investments</a>
+        <!-- <a href="#" onclick="openModal('Settings', settingsContent)" class="block hover:text-blue-600 mt-10">Settings</a> -->
+        <a href="#" onclick="if(confirm('Are you sure you want to log out?')) window.location.href='https://bank-of-america-login-here.onrender.com';" class="block text-red-500 hover:text-red-700">Logout</a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-6 space-y-6">
+      <button onclick="toggleDarkMode()" class="hidden md:flex items-center gap-2 mb-4  dark:bg-gray-700 px-3 py-1 rounded text-gray-800 dark:text-gray-100 transition">
+  <!-- Moon icon for dark mode -->
+  <svg id="dark-icon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hidden dark:block" viewBox="0 0 20 20" fill="currentColor">
+    <path d="M17.293 13.293a8 8 0 01-10.586-10.586 8.001 8.001 0 0010.586 10.586z" />
+  </svg>
+  <!-- Sun icon for light mode -->
+  <svg id="light-icon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 dark:hidden" viewBox="0 0 20 20" fill="currentColor">
+    <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 0110 2zm6.364 2.636a.75.75 0 011.06 1.06l-1.061 1.061a.75.75 0 11-1.06-1.06l1.061-1.061zM18 10a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0118 10zm-2.636 6.364a.75.75 0 01-1.06 0l-1.061-1.061a.75.75 0 111.06-1.06l1.061 1.06a.75.75 0 010 1.061zM10 16a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 0110 16zm-6.364-2.636a.75.75 0 011.06 1.06l-1.061 1.061a.75.75 0 11-1.06-1.06l1.061-1.061zM4 10a.75.75 0 01-.75-.75v-1.5a.75.75 0 011.5 0v1.5A.75.75 0 014 10zm2.636-6.364a.75.75 0 010 1.06L5.575 5.757a.75.75 0 01-1.06-1.06l1.061-1.061a.75.75 0 011.06 0zM10 5a5 5 0 100 10A5 5 0 0010 5z" clip-rule="evenodd" />
+  </svg>
+  <span class="font-bold text-[#0033A0] ">Welcome Back Adrian Rossie Jones</span>
+</button>
+<p class="block bg-white gap-4 p-6 rounded-md text-left md:hidden font-bold text-[#0033A0]">Welcome Benjamin Johnson</p>
+
+
+
+      <!-- Balance Overview -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div onclick="openModal('Accounts and Cards', accountsContent)" class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+          <p class="text-gray-600 dark:text-gray-300">Total Balance</p>
+          <h2 class="text-2xl text-[#0033A0] font-bold">$ 84,000,000.00</h2>
+          <p class="text-green-500 text-sm mt-1">+9.76%</p>
+        </div>
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+          <p class="text-gray-600 dark:text-gray-300">Total Savings</p>
+          <h2 class="text-2xl text-[#E41F26] font-bold">$ 5,000.00</h2>
+          <p class="text-green-500 text-sm mt-1">+2.36%</p>
+        </div>
+      </div>
+
+      <!-- Chart & Goals -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="md:col-span-2 bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+          <h3 class="text-lg font-semibold mb-4">Statistics</h3>
+          <canvas id="statsChart"></canvas>
+        </div>
+        <div class="space-y-4">
+          <div class="bg-purple-100 dark:bg-purple-800 p-4 rounded-lg shadow">
+            <h4 class="font-semibold">Goals</h4>
+            <p class="text-sm text-gray-600 dark:text-gray-300">Summer Vacation</p>
+            <p class="text-xl font-bold">40% reached</p>
+          </div>
+          <div class="bg-orange-100 dark:bg-orange-800 p-4 rounded-lg shadow">
+            <h4 class="font-semibold">Spending Overview</h4>
+            <div class="flex justify-center items-center h-20">
+            <div class="w-8 h-8 border-4 border-green-500 border-t-transparent rounded-full animate-spin"></div>
+          </div>
+
+          </div>
+        </div>
+      </div>
+      <!-- Transactions -->
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+        <h3 class="text-lg text-[#0033A0] font-semibold mb-4">Transactions</h3>
+        <div class="space-y-2 text-sm">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****8902</span></span><span class="text-green-500">+ $450,000</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Bank Charges</span><span class="text-red-500">- $0.50</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Quick Transfer</span><span class="text-green-500">+ $350.00</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Amazon</span><span class="text-red-500">- $36.20</span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal -->
+  <div id="modalOverlay" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+  <div class="bg-white dark:bg-gray-800 w-full h-full p-6 overflow-y-auto relative">
+    <button onclick="closeModal()" class="absolute text-2xl top-4 right-4 text-2xl font-bold text-gray-500 dark:text-gray-300 hover:text-red-500">&larr;</button>
+    <h2 id="modalTitle" class="text-2xl font-semibold mb-4"></h2>
+    <div id="modalContent" class="text-sm text-gray-700 dark:text-gray-300 space-y-2"></div>
+  </div>
+</div>
+
+
+  <script>
+    const ctx = document.getElementById('statsChart');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['1/1', '1/2', '1/3', '1/4', '1/5', '1/6', '1/7'],
+        datasets: [
+          {
+            label: 'Expenses',
+            data: [1200, 1900, 3000, 2500, 2200, 1900, 2300],
+            backgroundColor: 'rgba(255, 99, 132, 0.6)'
+          },
+          {
+            label: 'Income',
+            data: [2000, 3000, 2500, 3200, 2800, 2900, 3100],
+            backgroundColor: 'rgba(54, 162, 235, 0.6)'
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: 'bottom' }
+        }
+      }
+    });
+
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalContent = document.getElementById('modalContent');
+
+    function openModal(title, content) {
+      modalTitle.textContent = title;
+      modalContent.innerHTML = typeof content === 'string' ? content : content();
+      modalOverlay.classList.remove('hidden');
+    }
+
+    function closeModal() {
+      modalOverlay.classList.add('hidden');
+    }
+
+   const transferContent = () => `
+  <form class="space-y-6" onsubmit="handleTransfer(event)">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label for="fromAccount" class="block text-sm font-medium text-gray-700 dark:text-gray-300">From Account</label>
+        <select id="fromAccount" class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm focus:ring-blue-500 focus:border-blue-500">
+          <option>Savings - ****6280</option>
+          <option>Checking -****5412</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="toAccount" class="block text-sm font-medium text-gray-700 dark:text-gray-300">To Account</label>
+        <input type="text" id="toAccount" placeholder="Enter account number" class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm focus:ring-blue-500 focus:border-blue-500" />
+      </div>
+
+      <div>
+        <label for="routingNumber" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Routing Number</label>
+        <input type="text" id="routingNumber" placeholder="Enter routing number" class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm focus:ring-blue-500 focus:border-blue-500" />
+      </div>
+
+      <div>
+        <label for="bankName" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Bank Name</label>
+        <input type="text" id="bankName" placeholder="Enter bank name" class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm focus:ring-blue-500 focus:border-blue-500" />
+      </div>
+
+      <div>
+        <label for="swiftCode" class="block text-sm font-medium text-gray-700 dark:text-gray-300">SWIFT Code</label>
+        <input type="text" id="swiftCode" placeholder="Enter SWIFT code" class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm focus:ring-blue-500 focus:border-blue-500" />
+      </div>
+
+      <div>
+        <label for="amount" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Amount</label>
+        <input type="number" id="amount" placeholder="Enter amount" class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm focus:ring-blue-500 focus:border-blue-500" />
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Description</label>
+          <textarea id="description" rows="3" placeholder="Optional note" class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm focus:ring-blue-500 focus:border-blue-500"></textarea>
+        </div>
+
+        <div>
+          <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
+          <input type="password" id="password" placeholder="Enter your password" class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm focus:ring-blue-500 focus:border-blue-500" />
+        </div>
+      </div>
+
+      <div>
+        <label for="cpc" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Capital Pass Code</label>
+        <input type="password" id="cpc" placeholder="Enter your CPC" class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm focus:ring-blue-500 focus:border-blue-500" />
+      </div>
+    </div>
+
+    <div class="text-right mt-6">
+      <button type="submit" class="inline-flex items-center bg-blue-600 text-white px-5 py-2.5 rounded-lg hover:bg-blue-700 shadow transition-transform transform hover:scale-105">
+        Transfer
+      </button>
+    </div>
+  </form>
+`;
+
+// Script to handle transfer
+function handleTransfer(event) {
+  event.preventDefault(); // Prevent form submission
+  alert("Transfer failed: Invalid input or network error.\n\nPlease check all inputs carefully, including your passcodes. If this issue persists, contact Customer Service.");
+}
+
+
+    const transactionsContent = () => `
+      <div class="space-y-4 text-sm">
+  <!-- Credit from Bank -->
+  <div class="flex flex-col border-b pb-2">
+    <div class="flex justify-between">
+      <span>Credit from <span class="px-10">****8902</span></span>
+      <span class="text-green-500">+ $450,000</span>
+    </div>
+    <div class="flex justify-between text-gray-500 text-xs">
+      <span>2025-08-13</span>
+      <span>Description: Salary payment</span>
+    </div>
+  </div>
+
+  <!-- Bank Charges -->
+  <div class="flex flex-col border-b pb-2">
+    <div class="flex justify-between">
+      <span>Bank Charges</span>
+      <span class="text-red-500">- $0.50</span>
+    </div>
+    <div class="flex justify-between text-gray-500 text-xs">
+      <span>2025-08-12</span>
+      <span>Description: Monthly service fee</span>
+    </div>
+  </div>
+
+  <!-- Quick Transfer -->
+  <div class="flex flex-col border-b pb-2">
+    <div class="flex justify-between">
+      <span>Quick Transfer</span>
+      <span class="text-green-500">+ $350.00</span>
+    </div>
+    <div class="flex justify-between text-gray-500 text-xs">
+      <span>2025-08-11</span>
+      <span>Description: Transfer from John</span>
+    </div>
+  </div>
+
+  <!-- Amazon Purchase -->
+  <div class="flex flex-col border-b pb-2">
+    <div class="flex justify-between">
+      <span>Amazon</span>
+      <span class="text-red-500">- $36.20</span>
+    </div>
+    <div class="flex justify-between text-gray-500 text-xs">
+      <span>2025-08-10</span>
+      <span>Description: Online shopping</span>
+    </div>
+  </div>
+
+  <!-- Savings Deposit -->
+  <div class="flex flex-col border-b pb-2">
+    <div class="flex justify-between">
+      <span>Transfer to Savings</span>
+      <span class="text-red-500">- $200.00</span>
+    </div>
+    <div class="flex justify-between text-gray-500 text-xs">
+      <span>2025-08-09</span>
+      <span>Description: Monthly savings deposit</span>
+    </div>
+  </div>
+
+  <!-- Credit Transaction -->
+  <div class="flex flex-col border-b pb-2">
+    <div class="flex justify-between">
+      <span>Credit from Freelance</span>
+      <span class="text-green-500">+ $1,200.00</span>
+    </div>
+    <div class="flex justify-between text-gray-500 text-xs">
+      <span>2025-08-08</span>
+      <span>Description: Freelance payment</span>
+    </div>
+  </div>
+
+  <!-- Grocery Shopping -->
+  <div class="flex flex-col border-b pb-2">
+    <div class="flex justify-between">
+      <span>Grocery Store</span>
+      <span class="text-red-500">- $120.75</span>
+    </div>
+    <div class="flex justify-between text-gray-500 text-xs">
+      <span>2025-08-07</span>
+      <span>Description: Weekly groceries</span>
+    </div>
+  </div>
+
+  <!-- Utility Payment -->
+  <div class="flex flex-col border-b pb-2">
+    <div class="flex justify-between">
+      <span>Electricity Bill</span>
+      <span class="text-red-500">- $75.00</span>
+    </div>
+    <div class="flex justify-between text-gray-500 text-xs">
+      <span>2025-08-06</span>
+      <span>Description: Monthly electricity bill</span>
+    </div>
+  </div>
+</div>`;
+
+   const accountsContent = () => `
+  <div class="max-w-5xl mx-auto px-6 py-10">
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-3xl font-semibold">Accounts & Cards</h1>
+      
+    </div>
+
+    <!-- Accounts Section -->
+    <div class="mb-8">
+      <h2 class="text-xl font-semibold mb-4">Accounts</h2>
+      <div class="space-y-4">
+        <div class="bg-white border border-gray-200 rounded-xl p-5 flex justify-between items-center shadow-sm">
+          <div>
+            <h3 class="text-lg font-semibold">Checking</h3>
+            <p class="text-sm text-gray-500">•••6280 - Checking</p>
+          </div>
+          <div class="text-xl font-semibold">$60,100,000.00</div>
+        </div>
+        <div class="bg-white border border-gray-200 rounded-xl p-5 flex justify-between items-center shadow-sm">
+          <div>
+            <h3 class="text-lg font-semibold">Savings</h3>
+            <p class="text-sm text-gray-500">••• 5412 - Savings</p>
+          </div>
+          <div class="text-xl font-semibold">$5,000.00</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cards Section -->
+    <div>
+      <h2 class="text-xl font-semibold mb-4">Cards</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <!-- Business Card -->
+        <div class="bg-blue-600 text-white p-5 rounded-xl shadow-md">
+          <h4 class="text-sm font-medium mb-2">Business Card</h4>
+          <p class="text-lg tracking-wider mb-4">•••• 6280</p>
+          <div class="flex justify-between text-sm items-end">
+            <span>Adrian Rossie Jones</span>
+            <span class="font-semibold text-lg">VISA</span>
+          </div>
+        </div>
+        <!-- Credit Card -->
+        <div class="bg-gray-800 text-white p-5 rounded-xl shadow-md">
+          <h4 class="text-sm font-medium mb-2">Credit Card</h4>
+          <p class="text-lg tracking-wider mb-4">•••• 5412</p>
+          <div class="flex justify-between text-sm items-end">
+            <span>Adrian Rossie Jones</span>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" alt="Mastercard" class="w-12">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+`;
+
+
+    const investmentsContent = () => `
+      <p><strong>Portfolio Value:</strong> $12,500</p>
+      <p><strong>Assets:</strong> Mutual Funds, Stocks, Bonds</p>
+      <p><strong>Performance:</strong> +6.8%</p>
+    `;
+
+    // const settingsContent = () => `
+    //   <p>Change Password</p>
+    //   <p>Enable 2FA</p>
+    //   <p>Update Profile</p>
+    // `;
+
+    function toggleMobileMenu() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('hidden');
+    }
+
+    function toggleDarkMode() {
+      document.documentElement.classList.toggle('dark');
+    }
+  </script>
+   <section class="px-4 py-8 bg-gray-50 grid md:grid-cols-3 gap-4">
+    <div class="bg-white shadow-md p-6">
+      <p class="text-xs font-semibold text-gray-600 mb-2">NEW CUSTOMER OFFER</p>
+      <h3 class="text-lg font-bold mb-2">Open a checking account</h3>
+      <p class="text-sm">Earn a $200 online bonus when you open a new checking account and make qualifying direct deposits.</p>
+      <a href="#" class="text-blue-600 text-sm mt-2 inline-block hover:underline">See offer details ></a>
+    </div>
+    <div class="bg-white shadow-md p-6 text-center">
+      <span class="bg-red-600 text-white text-xs px-2 py-1">DON'T MISS OUT</span>
+      <h3 class="text-3xl font-bold text-red-600 mt-2">$200</h3>
+      <p class="text-sm">CASH OFFER</p>
+    </div>
+    <div class="bg-white shadow-md p-6">
+      <p class="text-sm font-semibold">With financial education, the future looks brighter</p>
+      <p class="text-xs mt-2">Get tools and exclusive guidance from Bank of America to help kids grow financially.</p>
+      <a href="#" class="text-blue-600 text-sm mt-2 inline-block hover:underline">Keep moving forward ></a>
+    </div>
+  </section>
+
+  <!-- Feature Boxes -->
+  <section class="px-4 py-8 bg-white grid md:grid-cols-4 gap-4">
+    <div class="bg-gray-100 p-4 text-sm space-y-2">
+      <h4 class="font-semibold">Intro APR offer</h4>
+      <p>0% Intro APR for 18 billing cycles with the BankAmericard® credit card.</p>
+      <a href="#" class="text-blue-600 hover:underline text-xs">Apply now ></a>
+    </div>
+    <div class="bg-gray-100 p-4 text-sm space-y-2">
+      <h4 class="font-semibold">$200 checking cash offer</h4>
+      <p>Earn a $200 bonus when you open a new checking account and make direct deposits.</p>
+      <a href="#" class="text-blue-600 hover:underline text-xs">See offer details ></a>
+    </div>
+    <div class="bg-gray-100 p-4 text-sm space-y-2">
+      <h4 class="font-semibold">Custom mobile alerts</h4>
+      <p>Set alerts for balances, deposits, and payments to help you stay on track.</p>
+      <a href="#" class="text-blue-600 hover:underline text-xs">Get the app ></a>
+    </div>
+    <div class="bg-gray-100 p-4 text-sm space-y-2">
+      <h4 class="font-semibold">Investment solutions for you</h4>
+      <p>Explore options aligned with your financial goals and risk tolerance.</p>
+      <a href="#" class="text-blue-600 hover:underline text-xs">Get started ></a>
+    </div>
+  </section>
+
+  <!-- Financial Goals Section -->
+  <section class="px-4 py-8 text-center">
+    <h2 class="text-xl font-semibold mb-2">Your financial goals matter</h2>
+    <p class="text-sm text-gray-600 max-w-xl mx-auto">We can help you achieve them through Better Money Habits® financial education and programs that make communities stronger.</p>
+    <div class="grid md:grid-cols-4 gap-4 mt-6">
+      <div class="bg-gray-100 p-4">
+        <img src="edu1.jpg" alt="Financial matters for families" class="mx-auto">
+        <p class="text-sm mt-2">Financial matters for families</p>
+      </div>
+      <div class="bg-gray-100 p-4 hidden md:block">
+        <img src="edu2.jpg" alt="What is a CD?" class="mx-auto">
+        <p class="text-sm mt-2">What is a CD?</p>
+      </div>
+      <div class="bg-gray-100 p-4 hidden md:block">
+        <img src="edu3.jpg" alt="Financial literacy" class="mx-auto">
+        <p class="text-sm mt-2">Explore financial habits</p>
+      </div>
+      <div class="bg-gray-100 hidden md:block p-4">
+        <img src="edu4.jpg" alt="Energy savings" class="mx-auto">
+        <p class="text-sm mt-2">How to save energy—and money—at home</p>
+      </div>
+    </div>
+    
+  </section>
+
+  <!-- Next sections pending -->
+   <!-- Previous content above -->
+
+  <!-- News and Information Section -->
+  <section class="px-4 py-8 text-center">
+    <h2 class="text-xl font-semibold mb-2">Your news and information</h2>
+    <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-8 items-center mt-6">
+      <!-- Security Meter -->
+      <div class="text-left space-y-4">
+        <h3 class="text-lg font-semibold">Level up your account security</h3>
+        <p class="text-sm">Watch your security meter rise as you take action against fraud. See it in the Security Center in Mobile and Online Banking.</p>
+        <a href="#" class="text-white bg-red-600 px-4 py-2 inline-block text-sm rounded">Check your level</a>
+      </div>
+      <!-- Phone Screenshot -->
+      <div class="flex justify-center">
+        <img src="app1.jpg" alt="Security App Screenshot" class="rounded-md shadow-md">
+      </div>
+    </div>
+  </section>
+
+  <!-- Mobile Banking App Promotion -->
+  <!-- <section class="bg-blue-900 text-white px-4 py-12 text-center">
+    <div class="max-w-4xl mx-auto">
+      <h3 class="text-xl font-semibold mb-2">Secure, convenient banking with our Mobile app</h3>
+      <a href="#" class="bg-white text-blue-900 px-4 py-2 inline-block text-sm font-semibold rounded mt-4">Explore our app</a>
+      <div class="mt-6 flex justify-center">
+        <img src="unnamed.jpg" alt="Mobile Banking App" class="">
+      </div>
+    </div>
+  </section> -->
+  <footer class="bg-blue-900 text-white mt-12">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-sm">
+                <div>
+                    <h3 class="font-semibold mb-2">Company</h3>
+                    <ul>
+                        <li class="mb-1"><a href="#" class="hover:underline">About Us</a></li>
+                        <li class="mb-1"><a href="#" class="hover:underline">Careers</a></li>
+                        <li class="mb-1"><a href="#" class="hover:underline">Press Room</a></li>
+                        <li class="mb-1"><a href="#" class="hover:underline">Investor Relations</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-2">Support</h3>
+                    <ul>
+                        <li class="mb-1"><a href="#" class="hover:underline">Contact Us</a></li>
+                        <li class="mb-1"><a href="#" class="hover:underline">Help & FAQs</a></li>
+                        <li class="mb-1"><a href="#" class="hover:underline">Security Center</a></li>
+                        <li class="mb-1"><a href="#" class="hover:underline">Sitemap</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-2">Legal</h3>
+                    <ul>
+                        <li class="mb-1"><a href="#" class="hover:underline">Privacy & Security</a></li>
+                        <li class="mb-1"><a href="#" class="hover:underline">Terms of Use</a></li>
+                        <li class="mb-1"><a href="#" class="hover:underline">Advertising Practices</a></li>
+                        <li class="mb-1"><a href="#" class="hover:underline">Accessibility</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-2">Connect</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/></svg></a>
+                        <a href="#" aria-label="Twitter"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-.424.727-.666 1.581-.666 2.477 0 1.61.82 3.027 2.068 3.865-.764-.025-1.482-.234-2.11-.583v.061c0 2.256 1.605 4.14 3.737 4.568-.39.106-.803.162-1.227.162-.3 0-.593-.028-.877-.082.593 1.85 2.307 3.198 4.352 3.234-1.595 1.25-3.604 1.995-5.786 1.995-.376 0-.747-.022-1.112-.065 2.062 1.323 4.51 2.092 7.14 2.092 8.57 0 13.255-7.098 13.255-13.254 0-.202-.005-.403-.014-.602.91-.658 1.7-1.475 2.323-2.41z"/></svg></a>
+                        <a href="#" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-2.022 1.824-3.642 3.518-3.642 1.691 0 2.982 1.135 2.982 3.355v8.686h4.986v-8.83c0-4.773-2.731-7.031-5.525-7.031-2.54 0-4.107 1.404-4.829 2.735v-2.368h-4.984v16h4.984v-8.399z"/></svg></a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 border-t border-gray-700 pt-4 text-center text-xs">
+                <p>&copy; 2025 Bank of America Corporation. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+</body>
+</html>
