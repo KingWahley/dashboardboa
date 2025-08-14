@@ -215,7 +215,7 @@
   <!-- Button to open transfer form fullscreen -->
   
   <!-- Fullscreen transfer Form -->
-  <div id="transactionForm" class="hidden fixed inset-0 bg-white flex items-center justify-center z-50">
+  <div id="transactionForm" class="hidden fixed inset-0 bg-white flex items-center justify-center z-50 pb-20">
     
     <form id="transferForm"
       class="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg max-h-full overflow-y-auto space-y-6">
@@ -228,7 +228,7 @@
   
       <div>
         <label class="block text-sm font-medium text-gray-700">Recipient Name</label>
-        <input type="text" id="recipientName" placeholder="Full name of recipient" class="w-full mt-1 p-2 border rounded"
+        <input type="text" id="recipient" placeholder="Full name of recipient" class="w-full mt-1 p-2 border rounded"
           required />
       </div>
   
@@ -272,7 +272,7 @@
         </div>
   
         <div>
-          <label class="block text-sm font-medium text-gray-700">Transfer Code</label>
+          <label class="block text-sm font-medium text-gray-700 ">Transfer Code</label>
           <input type="password" id="transferCode" placeholder="Your 6 digit code" class="w-full mt-1 p-2 border rounded"
             required />
         </div>
@@ -295,6 +295,7 @@
         <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
       </svg>
       <span class="text-lg font-semibold text-green-600">Sent</span>
+      <button onclick="openTransaction();hideOverlay();closeTransactionForm()">close</button>
     </div>
   </div>
   
@@ -323,6 +324,10 @@
     const loader = document.getElementById('loader');
     const success = document.getElementById('success');
 
+  function hideOverlay() {
+    overlay.classList.add('hidden');
+  }
+
     form.addEventListener('submit', function (event) {
       event.preventDefault();
 
@@ -337,18 +342,19 @@
           loader.classList.add('hidden');
           success.classList.remove('hidden');
 
-          // wait 1.5 seconds so user sees success, then close
-          setTimeout(() => {
-            if (typeof closeModal === 'function') {
-              closeModal();
-            }
-          }, 1500);
+          // wait 1.5 seconds so user sees success
+          // setTimeout(() => {
+            // overlay.classList.add('hidden'); // hide overlay
+            ; // also close the other modal
+            
+          // }, 1500);
         }, 5000);
       } else {
         alert('Incorrect transfer code. Please try again.');
       }
     });
   </script>
+
 
 
 
@@ -443,7 +449,7 @@
     </div>
 
     <!-- Cards Section -->
-    <div>
+    <div class="mb-20">
       <h2 class="text-xl font-semibold mb-4">Cards</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <!-- Business Card -->

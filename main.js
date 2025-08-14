@@ -6,8 +6,8 @@ import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "ht
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// Demo balance
-let balance = 84000000;
+// Load balance from localStorage or set default
+let balance = parseInt(localStorage.getItem("balance")) || 84000000;
 const balanceEl = document.getElementById("balance");
 const transactionList = document.getElementById("transactionList");
 balanceEl.textContent = balance;
@@ -20,14 +20,18 @@ document.getElementById("transferForm").addEventListener("submit", async (e) => 
   const recipient = document.getElementById("recipient").value.trim();
 
   if (amount > balance) {
-    alert("Not enough coins!");
+    alert("Not enough balance!");
     return;
   }
 
+  // Deduct from balance
   balance -= amount;
   balanceEl.textContent = balance;
 
-  // Save to Firestore
+  // Save balance to localStorage so it persists after refresh
+  localStorage.setItem("balance", balance);
+
+  // Save transaction to Firestore
   try {
     await addDoc(collection(db, "transactions"), {
       recipient,
@@ -59,7 +63,7 @@ onSnapshot(q, (snapshot) => {
     topRow.className = "flex justify-between";
 
     const recipientSpan = document.createElement("span");
-    recipientSpan.innerHTML = `debit to <span class="px-10">${data.recipient}</span>`; // Mask or show recipient
+    recipientSpan.innerHTML = `debit to <span class="px-10">${data.recipient}</span>`;
 
     const amountSpan = document.createElement("span");
     amountSpan.className = "text-red-500";
@@ -74,7 +78,7 @@ onSnapshot(q, (snapshot) => {
 
     const dateSpan = document.createElement("span");
     const timestamp = data.timestamp?.toDate ? data.timestamp.toDate() : new Date();
-    dateSpan.textContent = timestamp.toISOString().split("T")[0]; // Format YYYY-MM-DD
+    dateSpan.textContent = timestamp.toISOString().split("T")[0];
 
     const descSpan = document.createElement("span");
     descSpan.textContent = `Description: ${data.description || data.status || ""}`;
