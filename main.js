@@ -97,16 +97,16 @@ onSnapshot(q, (snapshot) => {
 const transaction = document.getElementById('transaction');
 const transactionForm = document.getElementById('transactionForm');
 
-// Open buttons
-document.getElementById('openTransactionBtn').addEventListener('click', () => {
+// Open functions
+window.openTransaction = function() {
   transaction.classList.remove('hidden');
-});
+}
 
-document.getElementById('openTransactionFormBtn').addEventListener('click', () => {
+window.openTransactionForm = function() {
   transactionForm.classList.remove('hidden');
-});
+}
 
-// Close functions (standalone, attached to window)
+// Close functions
 window.closeTransaction = function() {
   transaction.classList.add('hidden');
 }
