@@ -52,9 +52,9 @@
 <body class="bg-gray-100 dark:bg-gray-900 dark:text-white min-h-screen">
   <!-- HTML -->
 <nav id="bottom-nav" class="bottom-nav text-sm flex justify-around bg-gray-100 fixed bottom-0 w-full p-2 z-50">
-  <a class="flex flex-col items-center justify-center p-2" href="#" onclick="setActive(this); closeModal()"> <img class="w-8" src="case-svgrepo-com.svg" alt="">Dashboard</a>
-  <a class="flex flex-col items-center justify-center p-2" href="#" onclick="setActive(this); openModal('Transactions', transactionsContent)"><img class="w-8" src="chart-upward-svgrepo-com.svg" alt="">Transactions</a>
-  <a class="flex flex-col items-center justify-center p-2" href="#" onclick="setActive(this); openModal('Transfer', transferContent)"> <img class="w-8" src="transfer-svgrepo-com.svg" alt="">Transfer</a>
+  <a class="flex flex-col items-center justify-center p-2" href="#" onclick="setActive(this); closeModal();closeTransactionForm();closeTransaction()"> <img class="w-8" src="case-svgrepo-com.svg" alt="">Dashboard</a>
+  <a  id="openTransactionBtn" class="flex flex-col items-center justify-center p-2" href="#" onclick="setActive(this);closeTransactionForm();closeModal() "><img class="w-8" src="chart-upward-svgrepo-com.svg" alt="">Transactions</a>
+  <a id="openTransactionFormBtn"  class="flex flex-col items-center justify-center p-2" href="#" onclick="setActive(this); closeTransaction();closeModal() "> <img class="w-8" src="transfer-svgrepo-com.svg" alt="">Transfer</a>
   <a class="flex flex-col items-center justify-center p-2" href="#" onclick="setActive(this); openModal('Accounts and Cards', accountsContent)"> <img class="w-8" src="money-svgrepo-com.svg" alt="">Accounts</a>
 </nav>
 
@@ -76,7 +76,7 @@
     // Show splash for 3 seconds, then hide
     setTimeout(() => {
       document.getElementById('splash').style.display = 'none';
-      document.getElementById('main').style.display = 'block';
+      // document.getElementById('main').style.display = 'block';
     }, 4000); // 4000ms = 4 seconds
   </script>
   <div class="flex flex-col md:flex-row">
@@ -133,7 +133,7 @@
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div onclick="openModal('Accounts and Cards', accountsContent)" class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
           <p class="text-gray-600 dark:text-gray-300">Total Balance</p>
-          <h2 class="text-2xl text-[#0033A0] font-bold">$ 84,000,000.00</h2>
+          <h2 id="balance" class="text-2xl text-[#0033A0] font-bold"><span>$</span>84,000,000.00</h2>
           <p class="text-green-500 text-sm mt-1">+9.76%</p>
         </div>
         <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
@@ -184,6 +184,168 @@
       </div>
     </main>
   </div>
+  
+  <!-- Fullscreen Transaction Container -->
+  <div id="transaction" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white w-full h-full p-6 overflow-y-auto relative">
+      <!-- Close button -->
+      <button id="closeTransactionBtn" class="absolute top-4 right-4 text-gray-700 text-xl font-bold">&times;</button>
+  
+      <!-- Transactions -->
+      <div class="space-y-4 text-sm">
+        <!-- Transaction History -->
+        <h2 class="text-xl font-bold mt-8 mb-4">Transaction History</h2>
+        <ul id="transactionList" class="space-y-2"></ul>
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****8902</span></span>
+            <span class="text-green-500">+ $450,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-08-13</span>
+            <span>Description: Salary payment</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Button to open transfer form fullscreen -->
+  
+  <!-- Fullscreen transfer Form -->
+  <div id="transactionForm" class="hidden fixed inset-0 bg-white flex items-center justify-center z-50">
+    <form id="transferForm"
+      class="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg max-h-full overflow-y-auto space-y-6">
+      <h2 class="text-2xl font-semibold text-gray-800 text-center">Wire Transfer</h2>
+  
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Recipient Name</label>
+        <input type="text" id="recipientName" placeholder="Full name of recipient" class="w-full mt-1 p-2 border rounded"
+          required />
+      </div>
+  
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Recipient Account Number</label>
+        <input type="text" id="recipientAccount" placeholder="Account number" class="w-full mt-1 p-2 border rounded"
+          required />
+      </div>
+  
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Recipient Bank Name</label>
+        <input type="text" id="recipientBank" placeholder="Bank name" class="w-full mt-1 p-2 border rounded" required />
+      </div>
+  
+      <div>
+        <label class="block text-sm font-medium text-gray-700">SWIFT/BIC Code</label>
+        <input type="text" id="swiftCode" placeholder="SWIFT/BIC Code" class="w-full mt-1 p-2 border rounded" required />
+      </div>
+  
+      <div>
+        <label class="block text-sm font-medium text-gray-700">IBAN (if international)</label>
+        <input type="text" id="iban" placeholder="IBAN (optional)" class="w-full mt-1 p-2 border rounded" />
+      </div>
+  
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Amount</label>
+        <input type="number" id="amount" min="1" placeholder="Enter amount" class="w-full mt-1 p-2 border rounded"
+          required />
+      </div>
+  
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Reference / Notes</label>
+        <input type="text" id="reference" placeholder="Optional transfer note" class="w-full mt-1 p-2 border rounded" />
+      </div>
+  
+      <!-- Confirmation -->
+      <div class="space-y-4">
+        <div class="flex items-center space-x-2">
+          <input type="checkbox" id="confirm" class="h-4 w-4 text-blue-500 border-gray-300 rounded" required />
+          <label for="confirm" class="text-sm text-gray-700">I confirm that the information above is correct</label>
+        </div>
+  
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Transfer Code</label>
+          <input type="password" id="transferCode" placeholder="Your 6 digit code" class="w-full mt-1 p-2 border rounded"
+            required />
+        </div>
+  
+        <button type="submit" id="submitBtn" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">
+          Send
+        </button>
+      </div>
+    </form>
+  </div>
+  
+  <!-- Full screen loader and success overlay -->
+  <div id="overlay" class="hidden fixed inset-0 bg-white flex flex-col items-center justify-center z-50">
+    <!-- Loader -->
+    <div id="loader" class="w-16 h-16 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
+  
+    <!-- Success -->
+    <div id="success" class="hidden flex flex-col items-center space-y-2">
+      <svg class="w-16 h-16 text-green-500 animate-check" fill="none" viewBox="0 0 24 24" stroke-width="3">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+      </svg>
+      <span class="text-lg font-semibold text-green-600">Sent</span>
+    </div>
+  </div>
+  
+  <style>
+    @keyframes checkAnimation {
+      0% {
+        stroke-dasharray: 0, 48;
+      }
+  
+      100% {
+        stroke-dasharray: 48, 0;
+      }
+    }
+  
+    .animate-check path {
+      stroke-dasharray: 48;
+      stroke-dashoffset: 48;
+      animation: checkAnimation 0.5s forwards;
+    }
+  </style>
+  
+  <script>
+    const form = document.getElementById('transferForm');
+    const codeInput = document.getElementById('transferCode');
+    const overlay = document.getElementById('overlay');
+    const loader = document.getElementById('loader');
+    const success = document.getElementById('success');
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      if (codeInput.value === '562784') {
+        // show overlay with loader
+        overlay.classList.remove('hidden');
+        loader.classList.remove('hidden');
+        success.classList.add('hidden');
+
+        // 5 second delay then show success
+        setTimeout(() => {
+          loader.classList.add('hidden');
+          success.classList.remove('hidden');
+
+          // wait 1.5 seconds so user sees success, then close
+          setTimeout(() => {
+            if (typeof closeModal === 'function') {
+              closeModal();
+            }
+          }, 1500);
+        }, 5000);
+      } else {
+        alert('Incorrect transfer code. Please try again.');
+      }
+    });
+  </script>
+
+
+
+
+
+
 
   <!-- Modal -->
   <div id="modalOverlay" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
@@ -236,185 +398,12 @@
       modalOverlay.classList.add('hidden');
     }
 
-   const transferContent = () => `
-  <form class="max-w-3xl mx-auto p-6 bg-gray-50 dark:bg-gray-800 rounded-2xl shadow-lg space-y-6" onsubmit="handleTransfer(event)">
-  <h2 class="text-2xl font-semibold text-gray-900 dark:text-white text-center">Bank Transfer</h2>
   
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <!-- From Account -->
-    <div>
-      <label for="fromAccount" class="block text-sm font-medium text-gray-700 dark:text-gray-300">From Account</label>
-      <select id="fromAccount" class="mt-2 block w-full rounded-xl border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2">
-        <option>Savings - ****6280</option>
-        <option>Checking - ****5412</option>
-      </select>
-    </div>
-
-    <!-- To Account -->
-    <div>
-      <label for="toAccount" class="block text-sm font-medium text-gray-700 dark:text-gray-300">To Account</label>
-      <input type="text" id="toAccount" placeholder="Enter account number" class="mt-2 block w-full rounded-xl border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2" />
-    </div>
-
-    <!-- Routing Number -->
-    <div>
-      <label for="routingNumber" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Routing Number</label>
-      <input type="text" id="routingNumber" placeholder="Enter routing number" class="mt-2 block w-full rounded-xl border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2" />
-    </div>
-
-    <!-- Bank Name -->
-    <div>
-      <label for="bankName" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Bank Name</label>
-      <input type="text" id="bankName" placeholder="Enter bank name" class="mt-2 block w-full rounded-xl border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2" />
-    </div>
-
-    <!-- SWIFT Code -->
-    <div>
-      <label for="swiftCode" class="block text-sm font-medium text-gray-700 dark:text-gray-300">SWIFT Code</label>
-      <input type="text" id="swiftCode" placeholder="Enter SWIFT code" class="mt-2 block w-full rounded-xl border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2" />
-    </div>
-
-    <!-- Amount -->
-    <div>
-      <label for="amount" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Amount</label>
-      <input type="number" id="amount" placeholder="Enter amount" class="mt-2 block w-full rounded-xl border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2" />
-    </div>
-  </div>
-
-  <!-- Description & Password -->
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <div>
-      <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Description</label>
-      <textarea id="description" rows="3" placeholder="Optional note" class="mt-2 block w-full rounded-xl border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2"></textarea>
-    </div>
-
-    <div>
-      <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
-      <input type="password" id="password" placeholder="Enter your password" class="mt-2 block w-full rounded-xl border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2" />
-    </div>
-  </div>
-
-  <!-- Capital Pass Code -->
-  <div>
-    <label for="cpc" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Capital Pass Code</label>
-    <input type="password" id="cpc" placeholder="Enter your CPC" class="mt-2 block w-full rounded-xl border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2" />
-  </div>
-
-  <!-- Submit Button -->
-  <div class="text-right mt-4">
-    <button type="submit" class="inline-flex items-center justify-center bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 shadow-lg transition-all transform hover:scale-105 mb-24">
-      Transfer Funds
-    </button>
-  </div>
-</form>
-
-`;
-
-// Script to handle transfer
-function handleTransfer(event) {
-  event.preventDefault(); // Prevent form submission
-  alert("Transfer failed: Invalid input or network error.\n\nPlease check all inputs carefully, including your passcodes. If this issue persists, contact Customer Service.");
-}
 
 
-    const transactionsContent = () => `
-      <div class="space-y-4 text-sm">
-  <!-- Credit from Bank -->
-  <div class="flex flex-col border-b pb-2">
-    <div class="flex justify-between">
-      <span>Credit from <span class="px-10">****8902</span></span>
-      <span class="text-green-500">+ $450,000</span>
-    </div>
-    <div class="flex justify-between text-gray-500 text-xs">
-      <span>2025-08-13</span>
-      <span>Description: Salary payment</span>
-    </div>
-  </div>
 
-  <!-- Bank Charges -->
-  <div class="flex flex-col border-b pb-2">
-    <div class="flex justify-between">
-      <span>Bank Charges</span>
-      <span class="text-red-500">- $0.50</span>
-    </div>
-    <div class="flex justify-between text-gray-500 text-xs">
-      <span>2025-08-12</span>
-      <span>Description: Monthly service fee</span>
-    </div>
-  </div>
 
-  <!-- Quick Transfer -->
-  <div class="flex flex-col border-b pb-2">
-    <div class="flex justify-between">
-      <span>Quick Transfer</span>
-      <span class="text-green-500">+ $350.00</span>
-    </div>
-    <div class="flex justify-between text-gray-500 text-xs">
-      <span>2025-08-11</span>
-      <span>Description: Transfer from John</span>
-    </div>
-  </div>
-
-  <!-- Amazon Purchase -->
-  <div class="flex flex-col border-b pb-2">
-    <div class="flex justify-between">
-      <span>Amazon</span>
-      <span class="text-red-500">- $36.20</span>
-    </div>
-    <div class="flex justify-between text-gray-500 text-xs">
-      <span>2025-08-10</span>
-      <span>Description: Online shopping</span>
-    </div>
-  </div>
-
-  <!-- Savings Deposit -->
-  <div class="flex flex-col border-b pb-2">
-    <div class="flex justify-between">
-      <span>Transfer to Savings</span>
-      <span class="text-red-500">- $200.00</span>
-    </div>
-    <div class="flex justify-between text-gray-500 text-xs">
-      <span>2025-08-09</span>
-      <span>Description: Monthly savings deposit</span>
-    </div>
-  </div>
-
-  <!-- Credit Transaction -->
-  <div class="flex flex-col border-b pb-2">
-    <div class="flex justify-between">
-      <span>Credit from Freelance</span>
-      <span class="text-green-500">+ $1,200.00</span>
-    </div>
-    <div class="flex justify-between text-gray-500 text-xs">
-      <span>2025-08-08</span>
-      <span>Description: Freelance payment</span>
-    </div>
-  </div>
-
-  <!-- Grocery Shopping -->
-  <div class="flex flex-col border-b pb-2">
-    <div class="flex justify-between">
-      <span>Grocery Store</span>
-      <span class="text-red-500">- $120.75</span>
-    </div>
-    <div class="flex justify-between text-gray-500 text-xs">
-      <span>2025-08-07</span>
-      <span>Description: Weekly groceries</span>
-    </div>
-  </div>
-
-  <!-- Utility Payment -->
-  <div class="flex flex-col border-b pb-2">
-    <div class="flex justify-between">
-      <span>Electricity Bill</span>
-      <span class="text-red-500">- $75.00</span>
-    </div>
-    <div class="flex justify-between text-gray-500 text-xs">
-      <span>2025-08-06</span>
-      <span>Description: Monthly electricity bill</span>
-    </div>
-  </div>
-</div>`;
+  
 
    const accountsContent = () => `
   <div class="max-w-5xl mx-auto px-6 py-10">
@@ -635,6 +624,20 @@ function handleTransfer(event) {
             </div>
         </div>
     </footer>
+      <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg">
+        <h1 class="text-2xl font-bold mb-4 text-center">Gaming Coins Transfer</h1>
+      
+        <!-- Balance -->
+        <div class="text-lg font-semibold mb-6">
+          Balance: <span  class="text-green-600">1000</span> coins
+        </div>
+      
+        <!-- Transfer Form -->
+        
+      
+        
+      </div>
     
+  <script type="module" src="./main.js"></script>  
 </body>
 </html>
