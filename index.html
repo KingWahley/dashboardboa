@@ -89,7 +89,7 @@
       
       <div class="flex items-center gap-4">
         <button onclick="toggleDarkMode()" class="text-gray-600 dark:text-gray-300">🌓</button>
-        <button onclick="toggleMobileMenu()" class="text-gray-600 dark:text-gray-300 focus:outline-none">☰</button>
+        <!-- <button onclick="toggleMobileMenu()" class="text-gray-600 dark:text-gray-300 focus:outline-none">☰</button> -->
       </div>
     </header>
 
@@ -106,9 +106,9 @@
         <a href="#" onclick="openTransactionForm()" class="block hover:text-blue-600">Transfer</a>
         <a href="#" onclick="openTransaction();" class="block hover:text-blue-600">Recent Transactions</a>
         <a href="#" onclick="openModal('Accounts and Cards', accountsContent)" class="block hover:text-blue-600">Accounts and Cards</a>
-        <a href="#" onclick="openModal('Investments', investmentsContent)" class="block hover:text-blue-600">Investments</a>
+        <!-- <a href="#" onclick="openModal('Investments', investmentsContent)" class="block hover:text-blue-600">Investments</a> -->
         <!-- <a href="#" onclick="openModal('Settings', settingsContent)" class="block hover:text-blue-600 mt-10">Settings</a> -->
-        <a href="#" onclick="if(confirm('Are you sure you want to log out?')) window.location.href='https://bank-of-america-login-here.onrender.com';" class="block text-red-500 hover:text-red-700">Logout</a>
+        <a href="#" onclick="if(confirm('Are you sure you want to log out?')) window.location.href='';" class="block text-red-500 hover:text-red-700">Logout</a>
       </nav>
     </aside>
 
@@ -165,7 +165,7 @@
         </div>
       </div>
       <!-- Transactions -->
-      <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+      <!-- <div class="bg-white dark:bg-gray-800 p-6  rounded-lg shadow">
         <h3 class="text-lg text-[#0033A0] font-semibold mb-4">Transactions</h3>
         <div class="space-y-2 text-sm">
           <div class="flex justify-between">
@@ -181,7 +181,7 @@
             <span>Amazon</span><span class="text-red-500">- $36.20</span>
           </div>
         </div>
-      </div>
+      </div> -->
     </main>
   </div>
   
@@ -290,13 +290,26 @@
     <div id="loader" class="w-16 h-16 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
   
     <!-- Success -->
-    <div id="success" class="hidden flex flex-col items-center space-y-2">
-      <svg class="w-16 h-16 text-green-500 animate-check" fill="none" viewBox="0 0 24 24" stroke-width="3">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-      </svg>
-      <span class="text-lg font-semibold text-green-600">Sent</span>
-      <button onclick="openTransaction();hideOverlay();closeTransactionForm()">close</button>
+    <div id="success"
+      class="hidden flex flex-col items-center bg-white shadow-lg rounded-xl p-6 space-y-4 w-full max-w-sm text-center">
+      <!-- Icon -->
+      <div class="flex items-center justify-center w-16 h-16 bg-green-100 rounded-full">
+        <svg class="w-10 h-10 text-green-500" fill="none" viewBox="0 0 24 24" stroke-width="3">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+        </svg>
+      </div>
+    
+      <!-- Message -->
+      <span class="text-xl font-bold text-green-600">Transaction Successful</span>
+      <p class="text-gray-600 text-sm">Your transfer has been sent successfully.</p>
+    
+      <!-- Button -->
+      <button onclick="openTransaction();hideOverlay();closeTransactionForm()"
+        class="px-5 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg shadow transition duration-200">
+        Close
+      </button>
     </div>
+
   </div>
   
   <style>
@@ -497,7 +510,7 @@
       document.documentElement.classList.toggle('dark');
     }
   </script>
-   <section class="px-4 py-8 bg-gray-50 grid md:grid-cols-3 gap-4">
+   <!-- <section class="px-4 py-8 bg-gray-50 grid md:grid-cols-3 gap-4">
     <div class="bg-white shadow-md p-6">
       <p class="text-xs font-semibold text-gray-600 mb-2">NEW CUSTOMER OFFER</p>
       <h3 class="text-lg font-bold mb-2">Open a checking account</h3>
@@ -514,10 +527,10 @@
       <p class="text-xs mt-2">Get tools and exclusive guidance from Bank of America to help kids grow financially.</p>
       <a href="#" class="text-blue-600 text-sm mt-2 inline-block hover:underline">Keep moving forward ></a>
     </div>
-  </section>
+  </section> -->
 
   <!-- Feature Boxes -->
-  <section class="px-4 py-8 bg-white grid md:grid-cols-4 gap-4">
+  <!-- <section class="px-4 py-8 bg-white grid md:grid-cols-4 gap-4">
     <div class="bg-gray-100 p-4 text-sm space-y-2">
       <h4 class="font-semibold">Intro APR offer</h4>
       <p>0% Intro APR for 18 billing cycles with the BankAmericard® credit card.</p>
@@ -538,10 +551,10 @@
       <p>Explore options aligned with your financial goals and risk tolerance.</p>
       <a href="#" class="text-blue-600 hover:underline text-xs">Get started ></a>
     </div>
-  </section>
+  </section> -->
 
   <!-- Financial Goals Section -->
-  <section class="px-4 py-8 text-center">
+  <!-- <section class="px-4 py-8 text-center">
     <h2 class="text-xl font-semibold mb-2">Your financial goals matter</h2>
     <p class="text-sm text-gray-600 max-w-xl mx-auto">We can help you achieve them through Better Money Habits® financial education and programs that make communities stronger.</p>
     <div class="grid md:grid-cols-4 gap-4 mt-6">
@@ -563,27 +576,13 @@
       </div>
     </div>
     
-  </section>
+  </section> -->
 
   <!-- Next sections pending -->
    <!-- Previous content above -->
 
   <!-- News and Information Section -->
-  <section class="px-4 py-8 text-center">
-    <h2 class="text-xl font-semibold mb-2">Your news and information</h2>
-    <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-8 items-center mt-6">
-      <!-- Security Meter -->
-      <div class="text-left space-y-4">
-        <h3 class="text-lg font-semibold">Level up your account security</h3>
-        <p class="text-sm">Watch your security meter rise as you take action against fraud. See it in the Security Center in Mobile and Online Banking.</p>
-        <a href="#" class="text-white bg-red-600 px-4 py-2 inline-block text-sm rounded">Check your level</a>
-      </div>
-      <!-- Phone Screenshot -->
-      <div class="flex justify-center">
-        <img src="app1.jpg" alt="Security App Screenshot" class="rounded-md shadow-md">
-      </div>
-    </div>
-  </section>
+ 
 
   <!-- Mobile Banking App Promotion -->
   <!-- <section class="bg-blue-900 text-white px-4 py-12 text-center">
@@ -595,7 +594,7 @@
       </div>
     </div>
   </section> -->
-  <footer class="bg-blue-900 text-white mt-12">
+  <!-- <footer class="bg-blue-900 text-white mt-12">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-sm">
                 <div>
@@ -638,20 +637,8 @@
                 <p>&copy; 2025 Bank of America Corporation. All rights reserved.</p>
             </div>
         </div>
-    </footer>
-      <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg">
-        <h1 class="text-2xl font-bold mb-4 text-center">Gaming Coins Transfer</h1>
+    </footer> -->
       
-        <!-- Balance -->
-        <div class="text-lg font-semibold mb-6">
-          Balance: <span  class="text-green-600">1000</span> coins
-        </div>
-      
-        <!-- Transfer Form -->
-        
-      
-        
-      </div>
     
   <script type="module" src="./main.js"></script>  
 </body>
