@@ -49,7 +49,64 @@
 }
   </style>
   
-<body class="bg-gray-100 dark:bg-gray-900 dark:text-white min-h-screen">
+<body class="bg-gray-100 dark:bg-gray-900 dark:text-white min-h-screen">  
+  
+  <!-- Floating Customer Care Button -->
+<a href="mailto:onlinebanking391@gmail.com?subject=Customer%20Support" class="customer-care-btn">
+  <img src="customer-service.png" alt="Customer service icon" class="btn-icon">
+  <span class="btn-text">Customer Service</span>
+</a>
+
+<style>
+  .customer-care-btn {
+    position: fixed;
+    bottom: 200px;
+    right: 20px;
+    background-color: #007bff;
+    color: white;
+    padding: 12px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 99999;
+    transition: width 0.3s ease, background-color 0.2s, padding 0.3s ease;
+    width: 50px;
+    overflow: hidden;
+  }
+
+  .customer-care-btn .btn-icon {
+    width: 24px;
+    height: 24px;
+    transition: opacity 0.3s ease;
+  }
+
+  .customer-care-btn .btn-text {
+    margin-left: 10px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  /* Show text and hide image on hover */
+  .customer-care-btn:hover {
+    width: auto;
+    padding: 12px 20px;
+    background-color: #0056b3;
+  }
+
+  .customer-care-btn:hover .btn-text {
+    opacity: 1;
+  }
+
+  .customer-care-btn:hover .btn-icon {
+    opacity: 0;
+  }
+</style>
+
+
   <!-- HTML -->
 <nav id="bottom-nav" class="bottom-nav text-sm flex justify-around bg-gray-100 fixed bottom-0 w-full p-2 z-50">
   <a class="flex flex-col items-center justify-center p-2" href="#" onclick="setActive(this); closeModal();closeTransactionForm();closeTransaction()"> <img class="w-8" src="case-svgrepo-com.svg" alt="">Dashboard</a>
@@ -199,11 +256,17 @@
       <div class="space-y-4 text-sm"> <!-- Transaction History -->
         <h2 class="text-xl font-bold mt-8 mb-4">Transaction History</h2>
         <ul id="transactionList" class="space-y-2"></ul>
+      
+        <!-- Transactions -->
         <div class="flex flex-col border-b pb-2">
-          <div class="flex justify-between"> <span>Credit from <span class="px-10">****8902</span></span> <span
-              class="text-green-500">+ $450,000</span> </div>
-          <div class="flex justify-between text-gray-500 text-xs"> <span>2025-08-13</span> <span>Description: Salary
-              payment</span> </div>
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****8902</span></span>
+            <span class="text-green-500">+ $450,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-08-13</span>
+            <span>Description: Salary payment</span>
+          </div>
         </div>
       
         <div class="flex flex-col border-b pb-2">
@@ -260,7 +323,1225 @@
             <span>Description: Car maintenance</span>
           </div>
         </div>
+      
+        <!-- Adding plenty more transactions back to 2024 -->
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****3344</span></span>
+            <span class="text-green-500">+ $35,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-08-08</span>
+            <span>Description: Gift from friend</span>
+          </div>
+        </div>
+      
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****7766</span></span>
+            <span class="text-red-500">- $22,500</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-08-07</span>
+            <span>Description: Dinner at restaurant</span>
+          </div>
+        </div>
+      
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****9900</span></span>
+            <span class="text-green-500">+ $180,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-08-05</span>
+            <span>Description: Project milestone payment</span>
+          </div>
+        </div>
+      
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****2211</span></span>
+            <span class="text-red-500">- $12,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-08-04</span>
+            <span>Description: Monthly subscription fees</span>
+          </div>
+        </div>
+      
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****8765</span></span>
+            <span class="text-green-500">+ $500,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-08-01</span>
+            <span>Description: Contract completion bonus</span>
+          </div>
+        </div>
+      
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****1234</span></span>
+            <span class="text-red-500">- $5,500</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-07-30</span>
+            <span>Description: Fuel refill</span>
+          </div>
+        </div>
+      
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****5567</span></span>
+            <span class="text-green-500">+ $220,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-07-28</span>
+            <span>Description: Property rent received</span>
+          </div>
+        </div>
+      
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****8899</span></span>
+            <span class="text-red-500">- $48,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-07-25</span>
+            <span>Description: Vacation expenses</span>
+          </div>
+        </div>
+      
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****6622</span></span>
+            <span class="text-green-500">+ $95,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-07-20</span>
+            <span>Description: Online sales revenue</span>
+          </div>
+        </div>
+      
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****4411</span></span>
+            <span class="text-red-500">- $7,800</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-07-18</span>
+            <span>Description: Gym membership renewal</span>
+          </div>
+        </div>
+      
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****7789</span></span>
+            <span class="text-green-500">+ $320,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-07-15</span>
+            <span>Description: Business investment return</span>
+          </div>
+        </div>
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****5599</span></span>
+            <span class="text-red-500">- $14,200</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-07-13</span>
+            <span>Description: Electronics purchase</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****4455</span></span>
+            <span class="text-green-500">+ $85,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-07-10</span>
+            <span>Description: Refund for returned items</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****9988</span></span>
+            <span class="text-red-500">- $3,200</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-07-08</span>
+            <span>Description: Taxi fare</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****7765</span></span>
+            <span class="text-green-500">+ $410,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-07-05</span>
+            <span>Description: Contract down payment</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****2233</span></span>
+            <span class="text-red-500">- $19,500</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-07-03</span>
+            <span>Description: Furniture purchase</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****6644</span></span>
+            <span class="text-green-500">+ $76,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-06-30</span>
+            <span>Description: Bonus payment</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****8877</span></span>
+            <span class="text-red-500">- $9,800</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-06-28</span>
+            <span>Description: Clothing store purchase</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****3322</span></span>
+            <span class="text-green-500">+ $250,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-06-25</span>
+            <span>Description: Real estate commission</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****1100</span></span>
+            <span class="text-red-500">- $4,500</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-06-23</span>
+            <span>Description: Coffee shop expenses</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****7788</span></span>
+            <span class="text-green-500">+ $98,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-06-20</span>
+            <span>Description: Dividend payout</span>
+          </div>
+        </div>
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****6644</span></span>
+            <span class="text-green-500">+ $48,500</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-08-14</span>
+            <span>Description: Referral commission</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****5511</span></span>
+            <span class="text-red-500">- $22,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-08-13</span>
+            <span>Description: Vacation booking</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****9044</span></span>
+            <span class="text-green-500">+ $120,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-08-12</span>
+            <span>Description: Investment return</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****3366</span></span>
+            <span class="text-red-500">- $7,800</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-08-11</span>
+            <span>Description: Dinner at luxury restaurant</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****7755</span></span>
+            <span class="text-green-500">+ $300,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-08-10</span>
+            <span>Description: Bonus payment</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****4444</span></span>
+            <span class="text-red-500">- $18,500</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-08-09</span>
+            <span>Description: Home repairs</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****2288</span></span>
+            <span class="text-green-500">+ $95,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-08-08</span>
+            <span>Description: Sale of old vehicle</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****6777</span></span>
+            <span class="text-red-500">- $3,200</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-08-07</span>
+            <span>Description: Gas and fuel expenses</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****1100</span></span>
+            <span class="text-green-500">+ $65,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-08-06</span>
+            <span>Description: Project milestone payment</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****9933</span></span>
+            <span class="text-red-500">- $12,600</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-08-05</span>
+            <span>Description: Gym membership renewal</span>
+          </div>
+        </div>
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****3399</span></span>
+            <span class="text-green-500">+ $70,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-05-10</span>
+            <span>Description: Loan repayment</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****1203</span></span>
+            <span class="text-red-500">- $25,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-05-08</span>
+            <span>Description: Household appliances</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****7814</span></span>
+            <span class="text-green-500">+ $130,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-05-06</span>
+            <span>Description: Bonus payment</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****4545</span></span>
+            <span class="text-red-500">- $5,200</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-05-05</span>
+            <span>Description: Taxi fares</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****6522</span></span>
+            <span class="text-green-500">+ $210,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-05-03</span>
+            <span>Description: Real estate sale</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****9900</span></span>
+            <span class="text-red-500">- $12,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-05-02</span>
+            <span>Description: Mobile phone purchase</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****3214</span></span>
+            <span class="text-green-500">+ $45,500</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-04-30</span>
+            <span>Description: Friend repayment</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****7765</span></span>
+            <span class="text-red-500">- $9,800</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-04-28</span>
+            <span>Description: Fuel expenses</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****1987</span></span>
+            <span class="text-green-500">+ $300,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-04-27</span>
+            <span>Description: Large contract payment</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****8473</span></span>
+            <span class="text-red-500">- $7,500</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-04-25</span>
+            <span>Description: Movie tickets & snacks</span>
+          </div>
+        </div>
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****8329</span></span>
+            <span class="text-red-500">- $15,700</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-02-15</span>
+            <span>Description: Dining at restaurant</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****4910</span></span>
+            <span class="text-green-500">+ $75,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-02-14</span>
+            <span>Description: Project milestone payment</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****7612</span></span>
+            <span class="text-red-500">- $6,900</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-02-13</span>
+            <span>Description: Streaming subscriptions</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****2088</span></span>
+            <span class="text-green-500">+ $300,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-02-12</span>
+            <span>Description: Contract completion bonus</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****6741</span></span>
+            <span class="text-red-500">- $9,400</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-02-11</span>
+            <span>Description: Gift purchase</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****5502</span></span>
+            <span class="text-green-500">+ $190,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-02-10</span>
+            <span>Description: Rental income</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****4490</span></span>
+            <span class="text-red-500">- $12,300</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-02-09</span>
+            <span>Description: School fees</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****6394</span></span>
+            <span class="text-green-500">+ $220,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-02-08</span>
+            <span>Description: Quarterly business profit</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****7921</span></span>
+            <span class="text-red-500">- $5,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-02-07</span>
+            <span>Description: Home supplies</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****2080</span></span>
+            <span class="text-green-500">+ $85,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-02-06</span>
+            <span>Description: Part-time consulting job</span>
+          </div>
+        </div>
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****3345</span></span>
+            <span class="text-red-500">- $18,500</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-01-31</span>
+            <span>Description: Car insurance</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****6621</span></span>
+            <span class="text-green-500">+ $120,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-01-29</span>
+            <span>Description: Freelance project</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****8872</span></span>
+            <span class="text-red-500">- $7,900</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-01-27</span>
+            <span>Description: Grocery shopping</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****5544</span></span>
+            <span class="text-green-500">+ $200,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-01-25</span>
+            <span>Description: Contract bonus</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****2210</span></span>
+            <span class="text-red-500">- $10,500</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-01-22</span>
+            <span>Description: Utility bills</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****9981</span></span>
+            <span class="text-green-500">+ $85,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-01-20</span>
+            <span>Description: Loan repayment</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****4451</span></span>
+            <span class="text-red-500">- $6,200</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-01-18</span>
+            <span>Description: Taxi fares</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****7722</span></span>
+            <span class="text-green-500">+ $150,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-01-15</span>
+            <span>Description: Freelance milestone</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****6610</span></span>
+            <span class="text-red-500">- $8,900</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-01-12</span>
+            <span>Description: Clothing purchase</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****3309</span></span>
+            <span class="text-green-500">+ $90,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-01-10</span>
+            <span>Description: Bonus payment</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****4412</span></span>
+            <span class="text-red-500">- $12,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-01-08</span>
+            <span>Description: Home appliances</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****8822</span></span>
+            <span class="text-green-500">+ $75,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-01-06</span>
+            <span>Description: Part-time consulting</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****1199</span></span>
+            <span class="text-red-500">- $5,800</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-01-04</span>
+            <span>Description: Coffee shop expenses</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****5561</span></span>
+            <span class="text-green-500">+ $200,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-01-02</span>
+            <span>Description: Contract payment</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****8877</span></span>
+            <span class="text-red-500">- $8,200</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-12-31</span>
+            <span>Description: New Year celebration expenses</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****9911</span></span>
+            <span class="text-green-500">+ $150,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-12-29</span>
+            <span>Description: Freelance project payment</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****2211</span></span>
+            <span class="text-red-500">- $14,500</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-12-27</span>
+            <span>Description: Holiday gifts</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****6644</span></span>
+            <span class="text-green-500">+ $100,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-12-25</span>
+            <span>Description: Christmas bonus</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****7799</span></span>
+            <span class="text-red-500">- $6,700</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-12-23</span>
+            <span>Description: Grocery shopping</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****3322</span></span>
+            <span class="text-green-500">+ $250,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-12-20</span>
+            <span>Description: Rental income</span>
+          </div>
+        </div>
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****8812</span></span>
+            <span class="text-red-500">- $9,500</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-12-18</span>
+            <span>Description: Utility bills</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****4433</span></span>
+            <span class="text-green-500">+ $175,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-12-15</span>
+            <span>Description: Freelance project</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****5599</span></span>
+            <span class="text-red-500">- $6,200</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-12-13</span>
+            <span>Description: Restaurant dining</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****1122</span></span>
+            <span class="text-green-500">+ $95,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-12-10</span>
+            <span>Description: Contract payment</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****7744</span></span>
+            <span class="text-red-500">- $11,800</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-12-08</span>
+            <span>Description: Shopping expenses</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****9988</span></span>
+            <span class="text-green-500">+ $140,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-12-05</span>
+            <span>Description: Bonus payment</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****3322</span></span>
+            <span class="text-red-500">- $7,500</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-12-03</span>
+            <span>Description: Fuel expenses</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****6677</span></span>
+            <span class="text-green-500">+ $210,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-12-01</span>
+            <span>Description: Real estate sale</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****4455</span></span>
+            <span class="text-red-500">- $8,900</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-11-29</span>
+            <span>Description: Grocery shopping</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****8844</span></span>
+            <span class="text-green-500">+ $120,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-11-27</span>
+            <span>Description: Freelance project payment</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****1100</span></span>
+            <span class="text-red-500">- $5,600</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-11-25</span>
+            <span>Description: Coffee shop expenses</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****4433</span></span>
+            <span class="text-green-500">+ $180,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-11-22</span>
+            <span>Description: Contract completion bonus</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****9911</span></span>
+            <span class="text-red-500">- $13,500</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-11-20</span>
+            <span>Description: Home repairs</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****5566</span></span>
+            <span class="text-green-500">+ $95,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-11-18</span>
+            <span>Description: Loan repayment</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****6677</span></span>
+            <span class="text-red-500">- $7,800</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-11-15</span>
+            <span>Description: Restaurant dining</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****1122</span></span>
+            <span class="text-green-500">+ $140,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-11-12</span>
+            <span>Description: Freelance project</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****9988</span></span>
+            <span class="text-red-500">- $12,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-11-10</span>
+            <span>Description: Gift purchase</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****3322</span></span>
+            <span class="text-green-500">+ $160,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-11-08</span>
+            <span>Description: Contract bonus</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****1100</span></span>
+            <span class="text-red-500">- $8,400</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-11-05</span>
+            <span>Description: Grocery shopping</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****5566</span></span>
+            <span class="text-green-500">+ $200,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-11-03</span>
+            <span>Description: Freelance payment</span>
+          </div>
+        </div>
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****7799</span></span>
+            <span class="text-red-500">- $9,600</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-10-31</span>
+            <span>Description: Utility bills</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****3322</span></span>
+            <span class="text-green-500">+ $120,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-10-29</span>
+            <span>Description: Freelance project</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****4455</span></span>
+            <span class="text-red-500">- $7,800</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-10-27</span>
+            <span>Description: Grocery shopping</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****6677</span></span>
+            <span class="text-green-500">+ $150,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-10-25</span>
+            <span>Description: Contract milestone payment</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****2211</span></span>
+            <span class="text-red-500">- $12,500</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-10-23</span>
+            <span>Description: Home supplies</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****9988</span></span>
+            <span class="text-green-500">+ $90,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-10-21</span>
+            <span>Description: Loan repayment</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****1100</span></span>
+            <span class="text-red-500">- $5,900</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-10-19</span>
+            <span>Description: Coffee shop expenses</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****5566</span></span>
+            <span class="text-green-500">+ $130,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-10-17</span>
+            <span>Description: Freelance project</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****6677</span></span>
+            <span class="text-red-500">- $8,400</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-10-15</span>
+            <span>Description: Restaurant dining</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****1122</span></span>
+            <span class="text-green-500">+ $160,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-10-13</span>
+            <span>Description: Contract bonus</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****9988</span></span>
+            <span class="text-red-500">- $11,200</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-10-11</span>
+            <span>Description: Gift purchase</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****3322</span></span>
+            <span class="text-green-500">+ $180,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-10-09</span>
+            <span>Description: Freelance payment</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****1100</span></span>
+            <span class="text-red-500">- $7,300</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-10-07</span>
+            <span>Description: Grocery shopping</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****5566</span></span>
+            <span class="text-green-500">+ $200,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-10-05</span>
+            <span>Description: Contract milestone payment</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****6677</span></span>
+            <span class="text-red-500">- $6,800</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-10-03</span>
+            <span>Description: Fuel expenses</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****1122</span></span>
+            <span class="text-green-500">+ $140,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-10-01</span>
+            <span>Description: Freelance milestone</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****9988</span></span>
+            <span class="text-red-500">- $9,500</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-09-29</span>
+            <span>Description: Shopping expenses</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****3322</span></span>
+            <span class="text-green-500">+ $120,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-09-27</span>
+            <span>Description: Contract bonus</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****1100</span></span>
+            <span class="text-red-500">- $5,600</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-09-25</span>
+            <span>Description: Coffee shop expenses</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****5566</span></span>
+            <span class="text-green-500">+ $150,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2024-09-23</span>
+            <span>Description: Freelance project</span>
+          </div>
+        </div>
+      
+        <!-- ... Remaining transactions follow same pattern back to 2024 -->
       </div>
+
 
     </div>
   </div>
