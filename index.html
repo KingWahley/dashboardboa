@@ -115,7 +115,7 @@
   <a class="flex flex-col items-center justify-center p-2" href="#" onclick="setActive(this); openModal('Accounts and Cards', accountsContent)"> <img class="w-8" src="money-svgrepo-com.svg" alt="">Accounts</a>
 </nav>
 
-  <div id="splash" class="flex items-center justify-center p-5 ">
+  <div style="z-index: 99999999999;" id="splash" class="flex items-center justify-center p-5  ">
     <img class="w-48 " src="bank_of_america-logo.png" alt="">
     <p class="font-bold text-3xl">BANK OF AMERICA</p>
     <p class="mt-6 font-semibold text-blue-800 text-l">Welcome Back  Benjamin</p>
@@ -130,7 +130,7 @@
   // Add 'active' class to clicked link
   el.classList.add('bg-blue-500', 'text-white', 'rounded-lg');
 }
-    // Show splash for 3 seconds, then hide
+    // Show splash for 4 seconds, then hide
     setTimeout(() => {
       document.getElementById('splash').style.display = 'none';
       // document.getElementById('main').style.display = 'block';
