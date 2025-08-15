@@ -108,7 +108,7 @@
         <a href="#" onclick="openModal('Accounts and Cards', accountsContent)" class="block hover:text-blue-600">Accounts and Cards</a>
         <!-- <a href="#" onclick="openModal('Investments', investmentsContent)" class="block hover:text-blue-600">Investments</a> -->
         <!-- <a href="#" onclick="openModal('Settings', settingsContent)" class="block hover:text-blue-600 mt-10">Settings</a> -->
-        <a href="#" onclick="if(confirm('Are you sure you want to log out?')) window.location.href='';" class="block text-red-500 hover:text-red-700">Logout</a>
+        <a href="#" onclick="if(confirm('Are you sure you want to log out?')) window.location.href='https://boadashboardl0gin.onrender.com';" class="block text-red-500 hover:text-red-700">Logout</a>
       </nav>
     </aside>
 
@@ -286,7 +286,7 @@
   
       <div>
         <label class="block text-sm font-medium text-gray-700">Recipient Account Number</label>
-        <input type="text" id="recipientAccount" placeholder="Account number" class="w-full mt-1 p-2 border rounded"
+        <input type="number" id="recipientAccount" placeholder="Account number" class="w-full mt-1 p-2 border rounded"
           required />
       </div>
   
@@ -297,12 +297,12 @@
   
       <div>
         <label class="block text-sm font-medium text-gray-700">Routing Number</label>
-        <input type="text" id="Routing Number" placeholder="Routing Number" class="w-full mt-1 p-2 border rounded" required />
+        <input type="number" id="Routing Number" placeholder="Routing Number" class="w-full mt-1 p-2 border rounded" required />
       </div>
   
       <div>
         <label class="block text-sm font-medium text-gray-700">IBAN (if international)</label>
-        <input type="text" id="iban" placeholder="IBAN (optional)" class="w-full mt-1 p-2 border rounded" />
+        <input type="number" id="iban" placeholder="IBAN (optional)" class="w-full mt-1 p-2 border rounded" />
       </div>
   
       <div>
