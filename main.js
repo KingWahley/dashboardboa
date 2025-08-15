@@ -1,16 +1,40 @@
 import { firebaseConfig } from './firebaseConfig.js';
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
-import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+import { 
+  getFirestore, collection, addDoc, onSnapshot, query, orderBy, 
+  doc, getDoc, setDoc, updateDoc 
+} from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// Load balance from localStorage or set default
-let balance = parseInt(localStorage.getItem("balance")) || 84000000;
 const balanceEl = document.getElementById("balance");
 const transactionList = document.getElementById("transactionList");
-balanceEl.textContent = balance;
+
+// Format balance with commas
+function formatBalance(num) {
+  return num.toLocaleString();
+}
+
+// Load balance from Firestore (instead of localStorage)
+async function loadBalance() {
+  const balanceRef = doc(db, "settings", "balance");
+  const balanceSnap = await getDoc(balanceRef);
+
+  if (balanceSnap.exists()) {
+    const balanceValue = balanceSnap.data().amount;
+    balanceEl.textContent = formatBalance(balanceValue);
+    return balanceValue;
+  } else {
+    // Create default balance if not found
+    await setDoc(balanceRef, { amount: 84000000 });
+    balanceEl.textContent = formatBalance(84000000);
+    return 84000000;
+  }
+}
+
+let balance = await loadBalance(); // Get balance at start
 
 // Handle transfer
 document.getElementById("transferForm").addEventListener("submit", async (e) => {
@@ -26,10 +50,11 @@ document.getElementById("transferForm").addEventListener("submit", async (e) => 
 
   // Deduct from balance
   balance -= amount;
-  balanceEl.textContent = balance;
+  balanceEl.textContent = formatBalance(balance);
 
-  // Save balance to localStorage so it persists after refresh
-  localStorage.setItem("balance", balance);
+  // Save balance to Firestore
+  const balanceRef = doc(db, "settings", "balance");
+  await updateDoc(balanceRef, { amount: balance });
 
   // Save transaction to Firestore
   try {
@@ -67,7 +92,7 @@ onSnapshot(q, (snapshot) => {
 
     const amountSpan = document.createElement("span");
     amountSpan.className = "text-red-500";
-    amountSpan.textContent = `- $${data.amount}`;
+    amountSpan.textContent = `- $${formatBalance(data.amount)}`;
 
     topRow.appendChild(recipientSpan);
     topRow.appendChild(amountSpan);
@@ -81,7 +106,7 @@ onSnapshot(q, (snapshot) => {
     dateSpan.textContent = timestamp.toISOString().split("T")[0];
 
     const descSpan = document.createElement("span");
-    descSpan.textContent = `Description: ${data.description || data.status || ""}`;
+    descSpan.textContent = ` ${data.description || data.status || ""}`;
 
     bottomRow.appendChild(dateSpan);
     bottomRow.appendChild(descSpan);

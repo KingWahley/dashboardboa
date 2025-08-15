@@ -133,7 +133,8 @@
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div onclick="openModal('Accounts and Cards', accountsContent)" class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
           <p class="text-gray-600 dark:text-gray-300">Total Balance</p>
-          <h2 id="balance" class="text-2xl text-[#0033A0] font-bold"><span>$</span>84,000,000.00</h2>
+          <div class="flex flex-row items-center text-2xl text-[#0033A0] font-bold"><span class="">$</span><h2 id="balance" ></h2></div>
+          
           <p class="text-green-500 text-sm mt-1">+9.76%</p>
         </div>
         <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
@@ -195,21 +196,72 @@
       </button>
 
       <!-- Transactions -->
-      <div class="space-y-4 text-sm">
-        <!-- Transaction History -->
+      <div class="space-y-4 text-sm"> <!-- Transaction History -->
         <h2 class="text-xl font-bold mt-8 mb-4">Transaction History</h2>
         <ul id="transactionList" class="space-y-2"></ul>
         <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between"> <span>Credit from <span class="px-10">****8902</span></span> <span
+              class="text-green-500">+ $450,000</span> </div>
+          <div class="flex justify-between text-gray-500 text-xs"> <span>2025-08-13</span> <span>Description: Salary
+              payment</span> </div>
+        </div>
+      
+        <div class="flex flex-col border-b pb-2">
           <div class="flex justify-between">
-            <span>Credit from <span class="px-10">****8902</span></span>
-            <span class="text-green-500">+ $450,000</span>
+            <span>Debit to <span class="px-10">****5621</span></span>
+            <span class="text-red-500">- $15,000</span>
           </div>
           <div class="flex justify-between text-gray-500 text-xs">
-            <span>2025-08-13</span>
-            <span>Description: Salary payment</span>
+            <span>2025-08-14</span>
+            <span>Description: Grocery shopping</span>
+          </div>
+        </div>
+      
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****4456</span></span>
+            <span class="text-green-500">+ $120,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-08-12</span>
+            <span>Description: Freelance project</span>
+          </div>
+        </div>
+      
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****7788</span></span>
+            <span class="text-red-500">- $8,500</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-08-11</span>
+            <span>Description: Utility bill payment</span>
+          </div>
+        </div>
+      
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Credit from <span class="px-10">****1122</span></span>
+            <span class="text-green-500">+ $250,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-08-10</span>
+            <span>Description: Business profit</span>
+          </div>
+        </div>
+      
+        <div class="flex flex-col border-b pb-2">
+          <div class="flex justify-between">
+            <span>Debit to <span class="px-10">****9987</span></span>
+            <span class="text-red-500">- $60,000</span>
+          </div>
+          <div class="flex justify-between text-gray-500 text-xs">
+            <span>2025-08-09</span>
+            <span>Description: Car maintenance</span>
           </div>
         </div>
       </div>
+
     </div>
   </div>
   <!-- Button to open transfer form fullscreen -->
@@ -244,8 +296,8 @@
       </div>
   
       <div>
-        <label class="block text-sm font-medium text-gray-700">SWIFT/BIC Code</label>
-        <input type="text" id="swiftCode" placeholder="SWIFT/BIC Code" class="w-full mt-1 p-2 border rounded" required />
+        <label class="block text-sm font-medium text-gray-700">Routing Number</label>
+        <input type="text" id="Routing Number" placeholder="Routing Number" class="w-full mt-1 p-2 border rounded" required />
       </div>
   
       <div>
